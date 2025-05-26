@@ -1,17 +1,81 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider="postgresql"
-    url = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Employee {
-    id String @id @default(uuid())
-    name String
-    email String
-    created_at DateTime @default(now())
+  id         String            @id @default(uuid())
+  name       String
+  email      String            @unique
+  password   String
+  positionId String?
+  position   Position?         @relation(fields: [positionId], references: [id])
+  benefits   EmployeeBenefit[]
+  vacations  Vacation[]
+  createdAt  DateTime          @default(now())
 
-    @@map("employees")
+  @@map("employees")
 }
+
+model Position {
+  id        String     @id @default(uuid())
+  title     String
+  salary    Float
+  employees Employee[]
+
+  @@map("positions")
+}
+
+model Benefit {
+  id        String            @id @default(uuid())
+  name      String
+  value     Float
+  employees EmployeeBenefit[]
+
+  @@map("benefits")
+}
+
+model EmployeeBenefit {
+  id         String   @id @default(uuid())
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  employeeId String
+  benefit    Benefit  @relation(fields: [benefitId], references: [id])
+  benefitId  String
+  assignedAt DateTime @default(now())
+
+  @@unique([employeeId, benefitId])
+  @@map("employee_benefits")
+}
+
+model Vacation {
+  id         String   @id @default(uuid())
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  employeeId String
+  startDate  DateTime
+  endDate    DateTime
+
+  @@map("vacations")
+}
+
+// 4. API de Gestão de Recursos Humanos (HR Management API)
+// Objetivo: Desenvolver uma API para gerenciar informações de funcionários, como dados pessoais, cargos, salários, férias e benefícios.
+
+// Entidades: Funcionário, Cargo, Benefício, Férias.
+
+// Funcionalidades:
+
+// CRUD de Funcionários.
+
+// Atribuição de cargos e benefícios.
+
+// Registro de períodos de férias.
+
+// Funcionalidade especial: Calcular o saldo de férias e benefícios acumulados de um funcionário.
+
+// Tecnologias: Node.js ou Python (FastAPI), banco de dados relacional (PostgreSQL), JWT para autenticação.
+
+// Valor no mercado: Aplicações de gerenciamento de RH são amplamente utilizadas por empresas para controlar dados de funcionários e manter a conformidade com a legislação.
