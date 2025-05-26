@@ -4,6 +4,7 @@ import fastifyCookie from '@fastify/cookie';
 import { employeesRoutes } from './http/controllers/employees/routes';
 import { env } from './env';
 import { ZodError } from 'zod';
+import { adminsRoutes } from './http/controllers/admin/routes';
 
 export const app = fastify();
 
@@ -27,7 +28,8 @@ app.register(fastifyCookie)
 // cadastrando cookies do fastify(criar e recuperar cookies)
 
 
-app.register(employeesRoutes);
+app.register(employeesRoutes)
+app.register(adminsRoutes)
 
 
 app.setErrorHandler((error, _, reply) => {
