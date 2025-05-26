@@ -1,5 +1,5 @@
 import fastify from 'fastify';
-import { employeeRoutes } from './http/controllers/employee/routes';
+import { employeeRoutes } from './http/controllers/employees/routes';
 
 export const app = fastify();
 

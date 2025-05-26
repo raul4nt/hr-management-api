@@ -1,24 +1,29 @@
-import { prisma } from '@/lib/prisma'
-import { Prisma, Employee } from '@prisma/client'
 import { EmployeesRepository } from '@/repositories/employees-repository'
+import { Employee, Prisma } from '@prisma/client'
+import { randomUUID } from 'node:crypto'
 
-export class PrismaEmployeesRepository implements EmployeesRepository {
+export class InMemoryEmployeesRepository implements EmployeesRepository {
+  public items: Employee[] = []
+
   async findById(id: string): Promise<Employee | null> {
-    const employee = await prisma.employee.findUnique({
-      where: { id },
-    })
-    return employee
+    const employee = this.items.find((item) => item.id === id)
+    return employee ?? null
   }
 
   async findAll(): Promise<Employee[]> {
-    const employees = await prisma.employee.findMany()
-    return employees
+    return this.items
   }
 
   async create(data: Prisma.EmployeeCreateInput): Promise<Employee> {
-    const employee = await prisma.employee.create({
-      data,
-    })
+    const employee: Employee = {
+      id: randomUUID(),
+      name: data.name,
+      email: data.email,
+      positionId: data.position?.connect?.id ?? null,
+      createdAt: new Date(),
+    }
+
+    this.items.push(employee)
     return employee
   }
 
@@ -26,16 +31,29 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
     id: string,
     data: Prisma.EmployeeUpdateInput,
   ): Promise<Employee> {
-    const employee = await prisma.employee.update({
-      where: { id },
-      data,
-    })
-    return employee
+    const index = this.items.findIndex((item) => item.id === id)
+    if (index === -1) throw new Error('Employee not found')
+
+    const existing = this.items[index]
+
+    const updatedEmployee: Employee = {
+      ...existing,
+      name: data.name?.toString() ?? existing.name,
+      email: data.email?.toString() ?? existing.email,
+      positionId:
+        (data.position as Prisma.PositionUpdateOneWithoutEmployeesNestedInput)?.connect?.id ??
+        existing.positionId,
+      createdAt: existing.createdAt,
+    }
+
+    this.items[index] = updatedEmployee
+    return updatedEmployee
   }
 
   async delete(id: string): Promise<void> {
-    await prisma.employee.delete({
-      where: { id },
-    })
+    const index = this.items.findIndex((item) => item.id === id)
+    if (index === -1) throw new Error('Employee not found')
+
+    this.items.splice(index, 1)
   }
 }
