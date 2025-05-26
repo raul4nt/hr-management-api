@@ -1,7 +1,7 @@
 {
-  "name": "03-api-solid",
+  "name": "hr-api",
   "version": "1.0.0",
-  "description": "GymPass style app.",
+  "description": "Api for HR management.",
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",

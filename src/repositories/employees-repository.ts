@@ -1,6 +1,9 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Employee } from '@prisma/client'
 
 export interface EmployeesRepository {
-    findById(id: string): Promise<Employee | null>
-    create(data: Prisma.EmployeeCreateInput): Promise<Employee>
+  findById(id: string): Promise<Employee | null>
+  findAll(): Promise<Employee[]>
+  create(data: Prisma.EmployeeCreateInput): Promise<Employee>
+  update(id: string, data: Prisma.EmployeeUpdateInput): Promise<Employee>
+  delete(id: string): Promise<void>
 }

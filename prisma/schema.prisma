@@ -7,11 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admin {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  @@map("admins")
+}
+
 model Employee {
   id         String            @id @default(uuid())
   name       String
   email      String            @unique
-  password   String
   positionId String?
   position   Position?         @relation(fields: [positionId], references: [id])
   benefits   EmployeeBenefit[]
