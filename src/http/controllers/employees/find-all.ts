@@ -1,9 +1,9 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { FindAllEmployeesUseCase } from '@/use-cases/find-all-employees'
-import { InMemoryEmployeesRepository } from '@/repositories/in-memory/in-memory-employees-repository'
+import { PrismaEmployeesRepository } from '@/repositories/prisma/prisma-employees-repository'
 
-export async function findAll(_: FastifyRequest, reply: FastifyReply) {
-  const employeesRepository = new InMemoryEmployeesRepository()
+export async function findAll(request: FastifyRequest, reply: FastifyReply) {
+  const employeesRepository = new PrismaEmployeesRepository()
   const useCase = new FindAllEmployeesUseCase(employeesRepository)
 
   const { employees } = await useCase.execute()

@@ -5,6 +5,7 @@ import { employeesRoutes } from './http/controllers/employees/routes';
 import { env } from './env';
 import { ZodError } from 'zod';
 import { adminsRoutes } from './http/controllers/admin/routes';
+import { positionsRoutes } from './http/controllers/positions/routes';
 
 export const app = fastify();
 
@@ -30,6 +31,7 @@ app.register(fastifyCookie)
 
 app.register(employeesRoutes)
 app.register(adminsRoutes)
+app.register(positionsRoutes)
 
 
 app.setErrorHandler((error, _, reply) => {
