@@ -13,7 +13,7 @@ describe('Create Position (e2e)', () => {
 
   it('should be able to create a position', async () => {
     const response = await request(app.server).post('/positions').send({
-      name: 'Developer',
+      title: 'Developer',
       salary: 8000,
     })
 
@@ -21,7 +21,7 @@ describe('Create Position (e2e)', () => {
     expect(response.body.position).toEqual(
       expect.objectContaining({
         id: expect.any(String),
-        name: 'Developer',
+        title: 'Developer',
         salary: 8000,
       }),
     )

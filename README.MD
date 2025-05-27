@@ -1,3 +1,16 @@
+todo:
+
+- Utilizar recursos de mídias (imagem, áudio, vídeo ou outro recurso) em conjunto com um dos endpoints;
+- Realizar uma funcionalidade que utilize mapeamento Many-Many ou trabalhe com mais de duas entidades;
+
+
+
+
+
+
+
+
+
 4. API de Gestão de Recursos Humanos (HR Management API)
 Objetivo: Desenvolver uma API para gerenciar informações de funcionários, como dados pessoais, cargos, salários, férias e benefícios.
 

@@ -13,7 +13,7 @@ describe('Update Position (e2e)', () => {
 
   it('should be able to update a position', async () => {
     const createResponse = await request(app.server).post('/positions').send({
-      name: 'Developer',
+      title: 'Developer',
       salary: 6000,
     })
 
@@ -22,7 +22,7 @@ describe('Update Position (e2e)', () => {
     const updateResponse = await request(app.server)
       .put(`/positions/${positionId}`)
       .send({
-        name: 'Senior Developer',
+        title: 'Senior Developer',
         salary: 8000,
       })
 
@@ -30,7 +30,7 @@ describe('Update Position (e2e)', () => {
     expect(updateResponse.body.position).toEqual(
       expect.objectContaining({
         id: positionId,
-        name: 'Senior Developer',
+        title: 'Senior Developer',
         salary: 8000,
       }),
     )

@@ -13,7 +13,7 @@ describe('Delete Position (e2e)', () => {
 
   it('should be able to delete a position', async () => {
     const createResponse = await request(app.server).post('/positions').send({
-      name: 'Tester',
+      title: 'Tester',
       salary: 5000,
     })
 

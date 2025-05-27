@@ -13,12 +13,12 @@ describe('Find All Positions (e2e)', () => {
 
   it('should be able to list all positions', async () => {
     await request(app.server).post('/positions').send({
-      name: 'Developer',
+      title: 'Developer',
       salary: 7000,
     })
 
     await request(app.server).post('/positions').send({
-      name: 'Designer',
+      title: 'Designer',
       salary: 6000,
     })
 
@@ -28,8 +28,8 @@ describe('Find All Positions (e2e)', () => {
     expect(response.body.positions.length).toBeGreaterThanOrEqual(2)
     expect(response.body.positions).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: 'Developer' }),
-        expect.objectContaining({ name: 'Designer' }),
+        expect.objectContaining({ title: 'Developer' }),
+        expect.objectContaining({ title: 'Designer' }),
       ]),
     )
   })

@@ -13,7 +13,7 @@ describe('Find Position (e2e)', () => {
 
   it('should be able to find a position by ID', async () => {
     const createResponse = await request(app.server).post('/positions').send({
-      name: 'QA Engineer',
+      title: 'QA Engineer',
       salary: 5500,
     })
 
@@ -25,7 +25,7 @@ describe('Find Position (e2e)', () => {
     expect(findResponse.body.position).toEqual(
       expect.objectContaining({
         id: positionId,
-        name: 'QA Engineer',
+        title: 'QA Engineer',
         salary: 5500,
       }),
     )
