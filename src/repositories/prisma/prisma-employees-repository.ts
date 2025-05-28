@@ -38,4 +38,13 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
       where: { id },
     })
   }
+
+  async addBenefitToEmployee(employeeId: string, benefitId: string): Promise<void> {
+    await prisma.employeeBenefit.create({
+      data: {
+        employeeId,
+        benefitId,
+      },
+    })
+  }
 }

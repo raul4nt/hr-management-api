@@ -1,6 +1,7 @@
 import fastify from 'fastify';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCookie from '@fastify/cookie';
+import multer from 'fastify-multer';
 import { employeesRoutes } from './http/controllers/employees/routes';
 import { env } from './env';
 import { ZodError } from 'zod';
@@ -28,11 +29,11 @@ app.register(fastifyJwt, {
 app.register(fastifyCookie)
 // cadastrando cookies do fastify(criar e recuperar cookies)
 
+app.register(multer.contentParser)
 
 app.register(employeesRoutes)
 app.register(adminsRoutes)
 app.register(positionsRoutes)
-
 
 app.setErrorHandler((error, _, reply) => {
   // colocando _ ao invés do parametro certo(que seria request),

@@ -2,7 +2,15 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 import { makeCreateEmployeeUseCase } from '@/use-cases/factories/make-create-employee-use-case'
 
-export async function create(request: FastifyRequest, reply: FastifyReply) {
+// Define um tipo para o request com o arquivo, que o fastify-multer adiciona
+interface MultipartRequest extends FastifyRequest {
+  file?: {
+    filename: string
+  }
+  body: any
+}
+
+export async function create(request: MultipartRequest, reply: FastifyReply) {
   const bodySchema = z.object({
     name: z.string(),
     email: z.string().email(),
@@ -11,12 +19,15 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   const { name, email, positionId } = bodySchema.parse(request.body)
 
+  const photoUrl = request.file?.filename
+
   const useCase = makeCreateEmployeeUseCase()
 
   const { employee } = await useCase.execute({
     name,
     email,
     position: positionId ? { connect: { id: positionId } } : undefined,
+    photoUrl,
   })
 
   return reply.status(201).send({ employee })

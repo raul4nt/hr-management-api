@@ -24,7 +24,7 @@ model Employee {
   positionId String?
   position   Position?         @relation(fields: [positionId], references: [id])
   benefits   EmployeeBenefit[]
-  vacations  Vacation[]
+  photoUrl   String? 
   createdAt  DateTime          @default(now())
 
   @@map("employees")
@@ -49,24 +49,12 @@ model Benefit {
 }
 
 model EmployeeBenefit {
-  id         String   @id @default(uuid())
-  employee   Employee @relation(fields: [employeeId], references: [id])
   employeeId String
-  benefit    Benefit  @relation(fields: [benefitId], references: [id])
   benefitId  String
-  assignedAt DateTime @default(now())
 
-  @@unique([employeeId, benefitId])
+  employee Employee @relation(fields: [employeeId], references: [id])
+  benefit  Benefit  @relation(fields: [benefitId], references: [id])
+
+  @@id([employeeId, benefitId])
   @@map("employee_benefits")
 }
-
-model Vacation {
-  id         String   @id @default(uuid())
-  employee   Employee @relation(fields: [employeeId], references: [id])
-  employeeId String
-  startDate  DateTime
-  endDate    DateTime
-
-  @@map("vacations")
-}
-

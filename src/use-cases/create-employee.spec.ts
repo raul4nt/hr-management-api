@@ -11,7 +11,7 @@ describe('Create Employee Use Case', () => {
     sut = new CreateEmployeeUseCase(employeesRepository)
   })
 
-  it('should create a new employee', async () => {
+  it('should create a new employee without benefits', async () => {
     const { employee } = await sut.execute({
       name: 'John Doe',
       email: 'john@example.com',
@@ -23,4 +23,28 @@ describe('Create Employee Use Case', () => {
     expect(employee.email).toBe('john@example.com')
     expect(employee.positionId).toBe('position-01')
   })
+
+it('should create a new employee with photoUrl and add benefits', async () => {
+  const { employee } = await sut.execute({
+    name: 'John Doe',
+    email: 'john@example.com',
+    position: { connect: { id: 'position-02' } },
+    benefitIds: ['benefit-01', 'benefit-02'],
+    photoUrl: 'uploads/photo.png',
+  })
+
+  expect(employee.id).toEqual(expect.any(String))
+  expect(employee.name).toBe('John Doe')
+  expect(employee.email).toBe('john@example.com')
+  expect(employee.positionId).toBe('position-02')
+  expect(employee.photoUrl).toBe('uploads/photo.png')
+
+  const benefits = employeesRepository.employeeBenefits.get(employee.id)
+  expect(benefits).toBeDefined()
+  expect(benefits).toContain('benefit-01')
+  expect(benefits).toContain('benefit-02')
+  expect(benefits?.size).toBe(2)
+})
+
+
 })

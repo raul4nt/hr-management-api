@@ -1,7 +1,10 @@
 import { EmployeesRepository } from '@/repositories/employees-repository'
 import { Prisma, Employee } from '@prisma/client'
 
-interface CreateEmployeeUseCaseRequest extends Prisma.EmployeeCreateInput {}
+interface CreateEmployeeUseCaseRequest extends Omit<Prisma.EmployeeCreateInput, 'benefits'> {
+  benefitIds?: string[]
+  photoUrl?: string
+}
 
 interface CreateEmployeeUseCaseResponse {
   employee: Employee
@@ -13,7 +16,15 @@ export class CreateEmployeeUseCase {
   async execute(
     data: CreateEmployeeUseCaseRequest,
   ): Promise<CreateEmployeeUseCaseResponse> {
-    const employee = await this.employeesRepository.create(data)
+    const { benefitIds, ...employeeData } = data
+
+    const employee = await this.employeesRepository.create(employeeData)
+
+    if (benefitIds && benefitIds.length > 0) {
+      for (const benefitId of benefitIds) {
+        await this.employeesRepository.addBenefitToEmployee(employee.id, benefitId)
+      }
+    }
 
     return {
       employee,

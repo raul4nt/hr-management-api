@@ -5,6 +5,8 @@ import { randomUUID } from 'node:crypto'
 export class InMemoryEmployeesRepository implements EmployeesRepository {
   public items: Employee[] = []
 
+  public employeeBenefits: Map<string, Set<string>> = new Map()
+
   async findById(id: string): Promise<Employee | null> {
     const employee = this.items.find((item) => item.id === id)
     return employee ?? null
@@ -20,6 +22,7 @@ export class InMemoryEmployeesRepository implements EmployeesRepository {
       name: data.name,
       email: data.email,
       positionId: data.position?.connect?.id ?? null,
+      photoUrl: data.photoUrl ?? null,
       createdAt: new Date(),
     }
 
@@ -55,5 +58,11 @@ export class InMemoryEmployeesRepository implements EmployeesRepository {
     if (index === -1) throw new Error('Employee not found')
 
     this.items.splice(index, 1)
+  }
+
+  async addBenefitToEmployee(employeeId: string, benefitId: string): Promise<void> {
+    const benefits = this.employeeBenefits.get(employeeId) ?? new Set()
+    benefits.add(benefitId)
+    this.employeeBenefits.set(employeeId, benefits)
   }
 }
