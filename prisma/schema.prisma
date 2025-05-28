@@ -24,8 +24,10 @@ model Employee {
   positionId String?
   position   Position?         @relation(fields: [positionId], references: [id])
   benefits   EmployeeBenefit[]
-  photoUrl   String? 
+  photoUrl   String?
   createdAt  DateTime          @default(now())
+
+  gallery EmployeeGallery[]
 
   @@map("employees")
 }
@@ -57,4 +59,16 @@ model EmployeeBenefit {
 
   @@id([employeeId, benefitId])
   @@map("employee_benefits")
+}
+
+model EmployeeGallery {
+  id         String   @id @default(uuid())
+  employeeId String
+  fileUrl    String
+  fileType   String 
+  uploadedAt DateTime @default(now())
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+
+  @@map("employee_gallery")
 }

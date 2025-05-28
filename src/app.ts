@@ -8,6 +8,11 @@ import { ZodError } from 'zod';
 import { adminsRoutes } from './http/controllers/admin/routes';
 import { positionsRoutes } from './http/controllers/positions/routes';
 import { benefitsRoutes } from './http/controllers/benefits/routes';
+import { uploadRoutes } from './upload';
+
+
+
+
 
 export const app = fastify();
 
@@ -27,6 +32,8 @@ app.register(fastifyJwt, {
   },
 })
 
+
+
 app.register(fastifyCookie)
 // cadastrando cookies do fastify(criar e recuperar cookies)
 
@@ -36,6 +43,7 @@ app.register(employeesRoutes)
 app.register(adminsRoutes)
 app.register(positionsRoutes)
 app.register(benefitsRoutes)
+app.register(uploadRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   // colocando _ ao invés do parametro certo(que seria request),
