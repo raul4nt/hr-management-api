@@ -1,0 +1,169 @@
+### Variáveis de Ambiente
+@baseUrl = http://localhost:3333
+
+### Variáveis para armazenar IDs e Tokens (PREENCHA MANUALMENTE APÓS AS REQUISIÇÕES)
+@adminToken = SEU_TOKEN_ADMIN_AQUI
+@employeeId = SEU_EMPLOYEE_ID_AQUI
+@positionId = SUA_POSITION_ID_AQUI
+
+### ----------------------------------------------------
+### Autenticação e Administradores
+### ----------------------------------------------------
+
+### 1. Registrar Novo Administrador
+POST {{baseUrl}}/admins
+Content-Type: application/json
+
+{
+  "name": "Admin Teste",
+  "email": "admin@test.com",
+  "password": "senha123"
+}
+
+### 2. Autenticar Administrador e Obter Token
+# Após enviar, COPIE o "token" da resposta e cole em "@adminToken = SEU_TOKEN_ADMIN_AQUI" no topo.
+# Se quiser o ID do admin, COPIE o "id" do objeto "admin" da resposta e cole em "@adminId = SEU_ADMIN_ID_AQUI" no topo.
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "email": "admin@test.com",
+  "password": "senha123"
+}
+
+
+### ----------------------------------------------------
+### Rotas de Posições
+### ----------------------------------------------------
+
+### 3. Criar Nova Posição
+# Requer autenticação.
+# Após enviar, COPIE o "id" do objeto "position" da resposta e cole em "@positionId = SUA_POSITION_ID_AQUI" no topo.
+POST {{baseUrl}}/positions
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "Desenvolvedor Backend"
+}
+
+
+### 4. Listar Todas as Posições
+# Requer autenticação.
+GET {{baseUrl}}/positions
+Authorization: Bearer {{adminToken}}
+
+
+### 5. Obter Posição por ID
+# Requer autenticação. Use o @positionId que você preencheu.
+GET {{baseUrl}}/positions/{{positionId}}
+Authorization: Bearer {{adminToken}}
+
+
+### 6. Atualizar Posição
+# Requer autenticação. Use o @positionId que você preencheu.
+PUT {{baseUrl}}/positions/{{positionId}}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "Desenvolvedor Backend Sênior"
+}
+
+
+### 7. Deletar Posição
+# Requer autenticação. Use o @positionId que você preencheu.
+# CUIDADO: Esta requisição deleta a posição. Se precisar testar outras coisas, crie uma nova posição.
+DELETE {{baseUrl}}/positions/{{positionId}}
+Authorization: Bearer {{adminToken}}
+
+
+### ----------------------------------------------------
+### Rotas de Funcionários
+### ----------------------------------------------------
+
+### 8. Criar Novo Funcionário (sem foto inicialmente)
+# Requer autenticação.
+# Após enviar, COPIE o "id" do objeto "employee" da resposta e cole em "@employeeId = SEU_EMPLOYEE_ID_AQUI" no topo.
+POST {{baseUrl}}/employees
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "Maria Oliveira",
+  "email": "maria@example.com"
+}
+
+
+### 9. Criar Novo Funcionário (com foto - Multipart/form-data)
+# Requer autenticação.
+# Substitua `<caminho/para/sua/foto.png>` pelo caminho real do arquivo no seu sistema.
+# Ex: C:\Users\SeuUsuario\Pictures\minha-foto.jpg
+POST {{baseUrl}}/employees
+Content-Type: multipart/form-data; boundary=---011000010111000001101001
+Authorization: Bearer {{adminToken}}
+
+---011000010111000001101001
+Content-Disposition: form-data; name="name"
+
+Pedro Costa
+---011000010111000001101001
+Content-Disposition: form-data; name="email"
+
+pedro.costa@example.com
+---011000010111000001101001
+Content-Disposition: form-data; name="photo"; filename="profile.png"
+Content-Type: image/png
+
+< C:\Users\SeuUsuario\Desktop\test-image.png # Substitua pelo caminho real da sua imagem!
+---011000010111000001101001--
+
+
+### 10. Listar Todos os Funcionários
+# Requer autenticação.
+GET {{baseUrl}}/employees
+Authorization: Bearer {{adminToken}}
+
+
+### 11. Obter Funcionário por ID
+# Requer autenticação. Use o @employeeId que você preencheu.
+GET {{baseUrl}}/employees/{{employeeId}}
+Authorization: Bearer {{adminToken}}
+
+
+### 12. Atualizar Funcionário (sem foto - JSON)
+# Requer autenticação. Use o @employeeId que você preencheu.
+PUT {{baseUrl}}/employees/{{employeeId}}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "Ana Clara Nova",
+  "email": "ana.clara.nova@example.com"
+}
+
+
+### 13. Atualizar Funcionário (com foto - Multipart/form-data)
+# Requer autenticação. Use o @employeeId que você preencheu.
+# Substitua `<caminho/para/sua/foto.png>` pelo caminho real do arquivo no seu sistema.
+PUT {{baseUrl}}/employees/{{employeeId}}
+Content-Type: multipart/form-data; boundary=---011000010111000001101001
+Authorization: Bearer {{adminToken}}
+
+---011000010111000001101001
+Content-Disposition: form-data; name="name"
+
+Ana Clara Com Foto
+---011000010111000001101001
+Content-Disposition: form-data; name="photo"; filename="updated-profile.png"
+Content-Type: image/png
+
+< C:\Users\SeuUsuario\Desktop\another-test-image.png # Substitua pelo caminho real da sua imagem!
+---011000010111000001101001--
+
+
+### 14. Deletar Funcionário
+# Requer autenticação. Use o @employeeId que você preencheu.
+# CUIDADO: Esta requisição deleta o funcionário.
+DELETE {{baseUrl}}/employees/{{employeeId}}
+Authorization: Bearer {{adminToken}}

@@ -11,9 +11,13 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
     name: z.string().optional(),
     email: z.string().email().optional(),
     positionId: z.string().uuid().nullable().optional(),
+  }).strict().refine((data) => Object.keys(data).length > 0, {
+    message: 'At least one field must be provided',
   })
 
+
   const { id } = paramsSchema.parse(request.params)
+  console.log(request.body)
   const { name, email, positionId } = bodySchema.parse(request.body)
 
   const useCase = makeUpdateEmployeeUseCase()
