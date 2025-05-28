@@ -26,56 +26,50 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
     })
   }
 
-  async create(
-    data: Prisma.EmployeeCreateInput & { benefitIds?: string[] }
-  ): Promise<Employee> {
-    const { benefitIds, ...employeeData } = data
+async create(
+  data: Prisma.EmployeeCreateInput
+): Promise<Employee> {
+  return prisma.employee.create({
+    data,
+    include: {
+      benefits: { include: { benefit: true } },
+      position: true,
+    },
+  })
+}
 
-    return await prisma.employee.create({
-      data: {
-        ...employeeData,
-        benefits: benefitIds
-          ? {
-              create: benefitIds.map((benefitId: string) => ({
-                benefit: { connect: { id: benefitId } },
-              })),
-            }
-          : undefined,
-      },
-      include: {
-        benefits: { include: { benefit: true } },
-        position: true,
-      },
-    })
-  }
 
-  async update(
-    id: string,
-    data: Prisma.EmployeeUpdateInput & { benefitIds?: string[] }
-  ): Promise<Employee> {
-    const { benefitIds, ...employeeData } = data
+async update(
+  id: string,
+  data: Prisma.EmployeeUpdateInput & { benefitIds?: string[] }
+): Promise<Employee> {
+  const { benefitIds, ...employeeData } = data
 
-    return await prisma.employee.update({
-      where: { id },
-      data: {
-        ...employeeData,
-        ...(benefitIds
-          ? {
-              benefits: {
-                set: [],
-                create: benefitIds.map((benefitId: string) => ({
+  return await prisma.employee.update({
+    where: { id },
+    data: {
+      ...employeeData,
+      ...(benefitIds
+        ? {
+            benefits: {
+              deleteMany: { employeeId: id },
+              create: benefitIds
+                .filter((id) => id) 
+                .map((benefitId) => ({
                   benefit: { connect: { id: benefitId } },
                 })),
-              },
-            }
-          : {}),
-      },
-      include: {
-        benefits: { include: { benefit: true } },
-        position: true,
-      },
-    })
-  }
+            },
+          }
+        : undefined),
+    },
+    include: {
+      benefits: { include: { benefit: true } },
+      position: true,
+    },
+  })
+}
+
+
 
   async delete(id: string): Promise<void> {
     await prisma.employee.delete({ where: { id } })

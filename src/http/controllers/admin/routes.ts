@@ -1,7 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { register } from './register'
 import { authenticate } from './authenticate'
-// importe outros controllers que criou, ex: create, update, remove, find, findAll
 
 export async function adminsRoutes(app: FastifyInstance) {
   app.post('/admins', register)

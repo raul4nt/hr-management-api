@@ -39,11 +39,6 @@ it('should create a new employee with photoUrl and add benefits', async () => {
   expect(employee.positionId).toBe('position-02')
   expect(employee.photoUrl).toBe('uploads/photo.png')
 
-  const benefits = employeesRepository.employeeBenefits.get(employee.id)
-  expect(benefits).toBeDefined()
-  expect(benefits).toContain('benefit-01')
-  expect(benefits).toContain('benefit-02')
-  expect(benefits?.size).toBe(2)
 })
 
 

@@ -13,24 +13,25 @@ interface CreateEmployeeUseCaseResponse {
 export class CreateEmployeeUseCase {
   constructor(private employeesRepository: EmployeesRepository) {}
 
-  async execute(
-    data: CreateEmployeeUseCaseRequest,
-  ): Promise<CreateEmployeeUseCaseResponse> {
-    const { benefitIds, ...employeeData } = data
+async execute(
+  data: CreateEmployeeUseCaseRequest,
+): Promise<CreateEmployeeUseCaseResponse> {
+  const { benefitIds, ...employeeData } = data
 
-    const employee = await this.employeesRepository.create({
-      ...employeeData,
-      benefits: benefitIds
-        ? {
-            create: benefitIds.map(benefitId => ({
-              benefit: { connect: { id: benefitId } },
-            })),
-          }
-        : undefined,
-    })
+  const employee = await this.employeesRepository.create({
+    ...employeeData,
+    benefits: benefitIds
+      ? {
+          create: benefitIds.map(benefitId => ({
+            benefit: { connect: { id: benefitId } },
+          })),
+        }
+      : undefined,
+  })
 
-    return {
-      employee,
-    }
+  return {
+    employee,
   }
+}
+
 }
