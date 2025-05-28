@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { CreatePositionUseCase } from '@/use-cases/create-position'
-import { PrismaPositionsRepository } from '@/repositories/prisma/prisma-positions-repository'
+import { makeCreatePositionUseCase } from '@/use-cases/factories/make-create-position-use-case'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const bodySchema = z.object({
@@ -11,8 +10,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   const { title, salary } = bodySchema.parse(request.body)
 
-  const positionsRepository = new PrismaPositionsRepository()
-  const useCase = new CreatePositionUseCase(positionsRepository)
+  const useCase = makeCreatePositionUseCase()
 
   const { position } = await useCase.execute({
     title,

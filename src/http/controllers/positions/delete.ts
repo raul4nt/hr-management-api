@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { DeletePositionUseCase } from '@/use-cases/delete-position'
-import { PrismaPositionsRepository } from '@/repositories/prisma/prisma-positions-repository'
+import { makeDeletePostionUseCase } from '@/use-cases/factories/make-delete-position-use-case'
 
 export async function remove(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
@@ -10,8 +9,7 @@ export async function remove(request: FastifyRequest, reply: FastifyReply) {
 
   const { id } = paramsSchema.parse(request.params)
 
-  const positionsRepository = new PrismaPositionsRepository()
-  const useCase = new DeletePositionUseCase(positionsRepository)
+  const useCase = makeDeletePostionUseCase()
 
   await useCase.execute({ id })
 

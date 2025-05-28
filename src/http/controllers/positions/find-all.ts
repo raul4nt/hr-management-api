@@ -1,10 +1,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { FindAllPositionsUseCase } from '@/use-cases/find-all-positions'
-import { PrismaPositionsRepository } from '@/repositories/prisma/prisma-positions-repository'
+import { makeFindAllPositionsUseCase } from '@/use-cases/factories/make-find-all-positions-use-case'
 
 export async function findAll(request: FastifyRequest, reply: FastifyReply) {
-  const positionsRepository = new PrismaPositionsRepository()
-  const useCase = new FindAllPositionsUseCase(positionsRepository)
+  const useCase = makeFindAllPositionsUseCase()
 
   const { positions } = await useCase.execute()
 

@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { UpdateEmployeeUseCase } from '@/use-cases/update-employee'
-import { PrismaEmployeesRepository } from '@/repositories/prisma/prisma-employees-repository'
+import { makeUpdateEmployeeUseCase } from '@/use-cases/factories/make-update-employee-use-case'
 
 export async function update(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
@@ -17,8 +16,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
   const { id } = paramsSchema.parse(request.params)
   const { name, email, positionId } = bodySchema.parse(request.body)
 
-  const employeesRepository = new PrismaEmployeesRepository()
-  const useCase = new UpdateEmployeeUseCase(employeesRepository)
+  const useCase = makeUpdateEmployeeUseCase()
 
   const { employee } = await useCase.execute({
     id,

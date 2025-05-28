@@ -1,10 +1,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { FindAllEmployeesUseCase } from '@/use-cases/find-all-employees'
-import { PrismaEmployeesRepository } from '@/repositories/prisma/prisma-employees-repository'
+import { makeFindAllEmployeesUseCase } from '@/use-cases/factories/make-find-all-employees-use-case'
 
 export async function findAll(request: FastifyRequest, reply: FastifyReply) {
-  const employeesRepository = new PrismaEmployeesRepository()
-  const useCase = new FindAllEmployeesUseCase(employeesRepository)
+  const useCase = makeFindAllEmployeesUseCase()
 
   const { employees } = await useCase.execute()
 

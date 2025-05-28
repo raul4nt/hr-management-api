@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { CreateEmployeeUseCase } from '@/use-cases/create-employee'
-import { PrismaEmployeesRepository } from '@/repositories/prisma/prisma-employees-repository'
+import { makeCreateEmployeeUseCase } from '@/use-cases/factories/make-create-employee-use-case'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const bodySchema = z.object({
@@ -12,8 +11,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   const { name, email, positionId } = bodySchema.parse(request.body)
 
-  const employeesRepository = new PrismaEmployeesRepository()
-  const useCase = new CreateEmployeeUseCase(employeesRepository)
+  const useCase = makeCreateEmployeeUseCase()
 
   const { employee } = await useCase.execute({
     name,

@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { FindEmployeeByIdUseCase } from '@/use-cases/find-employee-by-id'
-import { PrismaEmployeesRepository } from '@/repositories/prisma/prisma-employees-repository'
+import { makeFindEmployeeByIdUseCase } from '@/use-cases/factories/make-find-employee-by-id-use-case'
 
 export async function find(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
@@ -10,8 +9,7 @@ export async function find(request: FastifyRequest, reply: FastifyReply) {
 
   const { id } = paramsSchema.parse(request.params)
 
-  const employeesRepository = new PrismaEmployeesRepository()
-  const useCase = new FindEmployeeByIdUseCase(employeesRepository)
+  const useCase = makeFindEmployeeByIdUseCase()
 
   const { employee } = await useCase.execute({ id })
 

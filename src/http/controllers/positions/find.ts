@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { FindPositionByIdUseCase } from '@/use-cases/find-position-by-id'
-import { PrismaPositionsRepository } from '@/repositories/prisma/prisma-positions-repository'
+import { makeFindPostionByIdUseCase } from '@/use-cases/factories/make-find-position-by-id-use-case'
 
 export async function find(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
@@ -10,8 +9,7 @@ export async function find(request: FastifyRequest, reply: FastifyReply) {
 
   const { id } = paramsSchema.parse(request.params)
 
-  const positionsRepository = new PrismaPositionsRepository()
-  const useCase = new FindPositionByIdUseCase(positionsRepository)
+  const useCase = makeFindPostionByIdUseCase()
 
   const { position } = await useCase.execute({ id })
 
