@@ -2,7 +2,6 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 import { makeCreateEmployeeUseCase } from '@/use-cases/factories/make-create-employee-use-case'
 
-// Define um tipo para o request com o arquivo, que o fastify-multer adiciona
 interface MultipartRequest extends FastifyRequest {
   file?: {
     filename: string
@@ -15,9 +14,10 @@ export async function create(request: MultipartRequest, reply: FastifyReply) {
     name: z.string(),
     email: z.string().email(),
     positionId: z.string().uuid().optional(),
+    benefitIds: z.array(z.string().uuid()).optional(),
   })
 
-  const { name, email, positionId } = bodySchema.parse(request.body)
+  const { name, email, positionId, benefitIds } = bodySchema.parse(request.body)
 
   const photoUrl = request.file?.filename
 
@@ -28,6 +28,7 @@ export async function create(request: MultipartRequest, reply: FastifyReply) {
     email,
     position: positionId ? { connect: { id: positionId } } : undefined,
     photoUrl,
+    benefitIds,
   })
 
   return reply.status(201).send({ employee })

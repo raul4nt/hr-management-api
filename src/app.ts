@@ -7,6 +7,7 @@ import { env } from './env';
 import { ZodError } from 'zod';
 import { adminsRoutes } from './http/controllers/admin/routes';
 import { positionsRoutes } from './http/controllers/positions/routes';
+import { benefitsRoutes } from './http/controllers/benefits/routes';
 
 export const app = fastify();
 
@@ -34,6 +35,7 @@ app.register(multer.contentParser)
 app.register(employeesRoutes)
 app.register(adminsRoutes)
 app.register(positionsRoutes)
+app.register(benefitsRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   // colocando _ ao invés do parametro certo(que seria request),

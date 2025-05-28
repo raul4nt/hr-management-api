@@ -18,13 +18,16 @@ export class CreateEmployeeUseCase {
   ): Promise<CreateEmployeeUseCaseResponse> {
     const { benefitIds, ...employeeData } = data
 
-    const employee = await this.employeesRepository.create(employeeData)
-
-    if (benefitIds && benefitIds.length > 0) {
-      for (const benefitId of benefitIds) {
-        await this.employeesRepository.addBenefitToEmployee(employee.id, benefitId)
-      }
-    }
+    const employee = await this.employeesRepository.create({
+      ...employeeData,
+      benefits: benefitIds
+        ? {
+            create: benefitIds.map(benefitId => ({
+              benefit: { connect: { id: benefitId } },
+            })),
+          }
+        : undefined,
+    })
 
     return {
       employee,
