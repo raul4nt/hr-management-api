@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { Benefit, Prisma } from '@prisma/client'
+import { BenefitsRepository } from '../benefits-repository'
 
-export class PrismaBenefitsRepository {
+export class PrismaBenefitsRepository implements BenefitsRepository {
   async findById(id: string): Promise<Benefit | null> {
     return await prisma.benefit.findUnique({ where: { id } })
   }
