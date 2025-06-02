@@ -1,4 +1,4 @@
-import { PrismaBenefitsRepository } from '@/repositories/benefits/prisma-benefits-repository'
+import { PrismaBenefitsRepository } from '@/repositories/prisma/prisma-benefits-repository'
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 

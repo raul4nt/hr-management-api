@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { makeFindPostionByIdUseCase } from '@/use-cases/factories/make-find-position-by-id-use-case'
+import { makeFindPositionByIdUseCase } from '@/use-cases/factories/make-find-position-by-id-use-case'
 
 export async function find(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
@@ -9,7 +9,7 @@ export async function find(request: FastifyRequest, reply: FastifyReply) {
 
   const { id } = paramsSchema.parse(request.params)
 
-  const useCase = makeFindPostionByIdUseCase()
+  const useCase = makeFindPositionByIdUseCase()
 
   const { position } = await useCase.execute({ id })
 

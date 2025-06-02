@@ -1,26 +1,69 @@
-todo:
+# 🧑‍💼 HR Management API
 
-- Utilizar recursos de mídias (imagem, áudio, vídeo ou outro recurso) em conjunto com um dos endpoints;
-- Realizar uma funcionalidade que utilize mapeamento Many-Many ou trabalhe com mais de duas entidades;
-- Employee deve ser criado com alguma position. Para criarmos um Employee, precisamos de uma position já criada(que seria o cargo);
+A RESTful API for managing employee data, including positions, salaries and benefits. Built with **Node.js** and **PostgreSQL**, this system helps organizations handle human resource operations efficiently and securely.
 
+---
 
+## 🚀 Project Goals
 
-API de Gestão de Recursos Humanos (HR Management API)
-Objetivo: Desenvolver uma API para gerenciar informações de funcionários, como dados pessoais, cargos, salários, férias e benefícios.
+To create an HR management system that allows companies to:
+- Register and manage employee data
+- Assign positions and benefits
+- Calculate accrued benefits
 
-Entidades: Funcionário, Cargo, Benefício, Férias.
+---
 
-Funcionalidades:
+## 🧱 Entities
 
-CRUD de Funcionários.
+- **Employee** – Stores personal and professional details
+- **Position** – Represents job roles and salaries
+- **Benefit** – Perks offered by the company (e.g., meal vouchers, health plans)
 
-Atribuição de cargos e benefícios.
+---
 
-Registro de períodos de férias.
+## 🔧 Features
 
-Funcionalidade especial: Calcular o saldo de férias e benefícios acumulados de um funcionário.
+- ✅ **CRUD for Employees**
+- ✅ **Assign Positions and Benefits**
+- ✅ **Calculate Benefit Balances**
+- ✅ **JWT Authentication for Secure Access**
+- ✅ **Many-to-Many Relationship** between Employees and Benefits
+- ✅ **Media Support** (Image, Audio, Video)
 
-Tecnologias: Node.js, banco de dados relacional (PostgreSQL), JWT para autenticação.
+---
 
-Valor no mercado: Aplicações de gerenciamento de RH são amplamente utilizadas por empresas para controlar dados de funcionários e manter a conformidade com a legislação.
+## 📦 Tech Stack
+
+- **Backend:** Node.js, Express.js
+- **Database:** PostgreSQL + Prisma ORM
+- **Authentication:** JSON Web Token (JWT)
+- **Testing:** Vitest + Supertest
+- **File Handling:** Multer (for media upload)
+
+---
+
+## 📚 Example Use Cases
+
+- HR managers can assign roles and benefits to new employees.
+- Benefit accumulation help comply with labor regulations.
+- Media support allows uploading employee profile photos or scanned documents.
+
+---
+
+## 🛡️ Security
+
+- All routes (except login/register) are protected using JWT authentication.
+- Input validation and error handling are implemented to ensure API robustness.
+
+---
+
+## ⚠️ TODO
+
+- [ ] Add Swagger/OpenAPI documentation
+- [ ] Implement email notifications for vacation approvals
+
+---
+
+## 📬 Feedback & Contributions
+
+Pull requests and issue reports are welcome. Help make this HR Management API even better!

@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { makeDeletePositionUseCase } from '@/use-cases/factories/make-delete-position-use-case'
+import { makeDeleteBenefitUseCase } from '@/use-cases/factories/make-delete-benefit-use-case'
 
 export async function remove(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({
@@ -9,7 +9,7 @@ export async function remove(request: FastifyRequest, reply: FastifyReply) {
 
   const { id } = paramsSchema.parse(request.params)
 
-  const useCase = makeDeletePositionUseCase()
+  const useCase = makeDeleteBenefitUseCase()
 
   await useCase.execute({ id })
 
