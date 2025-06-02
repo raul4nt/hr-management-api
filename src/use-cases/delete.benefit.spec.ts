@@ -14,7 +14,7 @@ describe('Delete Benefit Use Case', () => {
   it('should delete an existing benefit', async () => {
     const benefit = await benefitsRepository.create({
       name: 'Health Insurance',
-      value: 700
+      value: 700,
     })
 
     await sut.execute({ id: benefit.id })
@@ -24,8 +24,6 @@ describe('Delete Benefit Use Case', () => {
   })
 
   it('should throw error if benefit not found', async () => {
-    await expect(() =>
-      sut.execute({ id: 'non-existing-id' }),
-    ).rejects.toThrow()
+    await expect(() => sut.execute({ id: 'non-existing-id' })).rejects.toThrow()
   })
 })

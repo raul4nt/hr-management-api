@@ -38,7 +38,7 @@ describe('Authenticate Admin Use Case', () => {
       sut.execute({
         email: 'nonexistent@test.com',
         password: 'any-password',
-      })
+      }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
 
@@ -57,7 +57,7 @@ describe('Authenticate Admin Use Case', () => {
       sut.execute({
         email: 'admin2@test.com',
         password: 'wrong-password',
-      })
+      }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
 })

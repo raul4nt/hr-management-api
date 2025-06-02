@@ -19,11 +19,15 @@ describe('Delete Employee (e2e)', () => {
 
     const employeeId = createResponse.body.employee.id
 
-    const deleteResponse = await request(app.server).delete(`/employees/${employeeId}`)
+    const deleteResponse = await request(app.server).delete(
+      `/employees/${employeeId}`,
+    )
 
     expect(deleteResponse.statusCode).toBe(204)
 
-    const findResponse = await request(app.server).get(`/employees/${employeeId}`)
+    const findResponse = await request(app.server).get(
+      `/employees/${employeeId}`,
+    )
 
     expect(findResponse.statusCode).toBe(404)
   })

@@ -1,9 +1,9 @@
-import { PrismaPositionsRepository } from "@/repositories/prisma/prisma-positions-repository"
-import { CreatePositionUseCase } from "../create-position"
+import { PrismaPositionsRepository } from '@/repositories/prisma/prisma-positions-repository'
+import { CreatePositionUseCase } from '../create-position'
 
 export function makeCreatePositionUseCase() {
-    const positionsRepository = new PrismaPositionsRepository()
-    const useCase = new CreatePositionUseCase(positionsRepository)
+  const positionsRepository = new PrismaPositionsRepository()
+  const useCase = new CreatePositionUseCase(positionsRepository)
 
-    return useCase
+  return useCase
 }

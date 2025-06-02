@@ -1,6 +1,11 @@
-import { FastifyInstance } from "fastify"
-import { createBenefit, deleteBenefit, getBenefit, listBenefits, updateBenefit } from "./benefits-controller"
-
+import { FastifyInstance } from 'fastify'
+import {
+  createBenefit,
+  deleteBenefit,
+  getBenefit,
+  listBenefits,
+  updateBenefit,
+} from './benefits-controller'
 
 export async function benefitsRoutes(app: FastifyInstance) {
   app.post('/benefits', createBenefit)

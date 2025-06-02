@@ -25,7 +25,9 @@ describe('Find Position By Id Use Case', () => {
   })
 
   it('should return null if position not found', async () => {
-    const { position: foundPosition } = await sut.execute({ id: 'non-existing-id' })
+    const { position: foundPosition } = await sut.execute({
+      id: 'non-existing-id',
+    })
 
     expect(foundPosition).toBeNull()
   })

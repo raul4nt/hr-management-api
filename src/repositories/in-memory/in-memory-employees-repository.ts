@@ -44,8 +44,8 @@ export class InMemoryEmployeesRepository implements EmployeesRepository {
       name: data.name?.toString() ?? existing.name,
       email: data.email?.toString() ?? existing.email,
       positionId:
-        (data.position as Prisma.PositionUpdateOneWithoutEmployeesNestedInput)?.connect?.id ??
-        existing.positionId,
+        (data.position as Prisma.PositionUpdateOneWithoutEmployeesNestedInput)
+          ?.connect?.id ?? existing.positionId,
       createdAt: existing.createdAt,
     }
 
@@ -60,7 +60,10 @@ export class InMemoryEmployeesRepository implements EmployeesRepository {
     this.items.splice(index, 1)
   }
 
-  async addBenefitToEmployee(employeeId: string, benefitId: string): Promise<void> {
+  async addBenefitToEmployee(
+    employeeId: string,
+    benefitId: string,
+  ): Promise<void> {
     const benefits = this.employeeBenefits.get(employeeId) ?? new Set()
     benefits.add(benefitId)
     this.employeeBenefits.set(employeeId, benefits)

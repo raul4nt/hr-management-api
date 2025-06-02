@@ -22,7 +22,10 @@ export class PrismaPositionsRepository implements PositionsRepository {
     return position
   }
 
-  async update(id: string, data: Prisma.PositionUpdateInput): Promise<Position> {
+  async update(
+    id: string,
+    data: Prisma.PositionUpdateInput,
+  ): Promise<Position> {
     const position = await prisma.position.update({
       where: { id },
       data,

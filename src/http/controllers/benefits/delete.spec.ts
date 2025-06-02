@@ -19,7 +19,9 @@ describe('Delete Benefit (e2e)', () => {
 
     const benefitId = createResponse.body.benefit.id
 
-    const deleteResponse = await request(app.server).delete(`/benefits/${benefitId}`)
+    const deleteResponse = await request(app.server).delete(
+      `/benefits/${benefitId}`,
+    )
 
     expect(deleteResponse.statusCode).toBe(204)
 

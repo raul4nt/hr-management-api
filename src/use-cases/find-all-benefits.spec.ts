@@ -14,7 +14,7 @@ describe('Find All Benefits Use Case', () => {
   it('should return all benefits', async () => {
     await benefitsRepository.create({
       name: 'Health Insurance',
-      value: 700
+      value: 700,
     })
 
     await benefitsRepository.create({

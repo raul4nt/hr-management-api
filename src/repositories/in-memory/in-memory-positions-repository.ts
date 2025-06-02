@@ -25,7 +25,10 @@ export class InMemoryPositionsRepository implements PositionsRepository {
     return position
   }
 
-  async update(id: string, data: Prisma.PositionUpdateInput): Promise<Position> {
+  async update(
+    id: string,
+    data: Prisma.PositionUpdateInput,
+  ): Promise<Position> {
     const index = this.items.findIndex((item) => item.id === id)
     if (index === -1) throw new Error('Position not found')
 

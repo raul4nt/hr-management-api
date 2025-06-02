@@ -21,7 +21,7 @@ describe('Update Benefit Use Case', () => {
       id: benefit.id,
       data: {
         name: 'Life Insurance',
-      value: 1000,
+        value: 1000,
       },
     })
 

@@ -1,13 +1,19 @@
 import { prisma } from '@/lib/prisma'
 
 export class PrismaEmployeeBenefitsRepository {
-  async addBenefitToEmployee(employeeId: string, benefitId: string): Promise<void> {
+  async addBenefitToEmployee(
+    employeeId: string,
+    benefitId: string,
+  ): Promise<void> {
     await prisma.employeeBenefit.create({
       data: { employeeId, benefitId },
     })
   }
 
-  async removeBenefitFromEmployee(employeeId: string, benefitId: string): Promise<void> {
+  async removeBenefitFromEmployee(
+    employeeId: string,
+    benefitId: string,
+  ): Promise<void> {
     await prisma.employeeBenefit.delete({
       where: { employeeId_benefitId: { employeeId, benefitId } },
     })

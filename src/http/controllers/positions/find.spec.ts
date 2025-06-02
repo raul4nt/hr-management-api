@@ -19,7 +19,9 @@ describe('Find Position (e2e)', () => {
 
     const positionId = createResponse.body.position.id
 
-    const findResponse = await request(app.server).get(`/positions/${positionId}`)
+    const findResponse = await request(app.server).get(
+      `/positions/${positionId}`,
+    )
 
     expect(findResponse.statusCode).toBe(200)
     expect(findResponse.body.position).toEqual(

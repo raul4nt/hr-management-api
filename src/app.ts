@@ -1,20 +1,16 @@
-import fastify from 'fastify';
-import fastifyJwt from '@fastify/jwt';
-import fastifyCookie from '@fastify/cookie';
-import multer from 'fastify-multer';
-import { employeesRoutes } from './http/controllers/employees/routes';
-import { env } from './env';
-import { ZodError } from 'zod';
-import { adminsRoutes } from './http/controllers/admin/routes';
-import { positionsRoutes } from './http/controllers/positions/routes';
-import { benefitsRoutes } from './http/controllers/benefits/routes';
-import { uploadRoutes } from './upload';
+import fastify from 'fastify'
+import fastifyJwt from '@fastify/jwt'
+import fastifyCookie from '@fastify/cookie'
+import multer from 'fastify-multer'
+import { employeesRoutes } from './http/controllers/employees/routes'
+import { env } from './env'
+import { ZodError } from 'zod'
+import { adminsRoutes } from './http/controllers/admin/routes'
+import { positionsRoutes } from './http/controllers/positions/routes'
+import { benefitsRoutes } from './http/controllers/benefits/routes'
+import { uploadRoutes } from './upload'
 
-
-
-
-
-export const app = fastify();
+export const app = fastify()
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
@@ -31,8 +27,6 @@ app.register(fastifyJwt, {
     // (iremos usar o refreshtoken)
   },
 })
-
-
 
 app.register(fastifyCookie)
 // cadastrando cookies do fastify(criar e recuperar cookies)

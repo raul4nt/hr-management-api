@@ -2,10 +2,12 @@ import { PrismaBenefitsRepository } from '@/repositories/prisma/prisma-benefits-
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 
-
 const benefitsRepo = new PrismaBenefitsRepository()
 
-export async function createBenefit(request: FastifyRequest, reply: FastifyReply) {
+export async function createBenefit(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const bodySchema = z.object({
     name: z.string(),
     value: z.number(),
@@ -18,12 +20,18 @@ export async function createBenefit(request: FastifyRequest, reply: FastifyReply
   return reply.status(201).send({ benefit })
 }
 
-export async function listBenefits(request: FastifyRequest, reply: FastifyReply) {
+export async function listBenefits(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const benefits = await benefitsRepo.findAll()
   return reply.send({ benefits })
 }
 
-export async function getBenefit(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+export async function getBenefit(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply,
+) {
   const { id } = request.params
   const benefit = await benefitsRepo.findById(id)
 
@@ -33,7 +41,10 @@ export async function getBenefit(request: FastifyRequest<{ Params: { id: string 
 }
 
 export async function updateBenefit(
-  request: FastifyRequest<{ Params: { id: string }; Body: { name?: string; value?: number } }>,
+  request: FastifyRequest<{
+    Params: { id: string }
+    Body: { name?: string; value?: number }
+  }>,
   reply: FastifyReply,
 ) {
   const { id } = request.params
@@ -49,7 +60,10 @@ export async function updateBenefit(
   return reply.send({ benefit: updatedBenefit })
 }
 
-export async function deleteBenefit(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+export async function deleteBenefit(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply,
+) {
   const { id } = request.params
 
   await benefitsRepo.delete(id)

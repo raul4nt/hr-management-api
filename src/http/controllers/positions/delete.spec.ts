@@ -19,11 +19,15 @@ describe('Delete Position (e2e)', () => {
 
     const positionId = createResponse.body.position.id
 
-    const deleteResponse = await request(app.server).delete(`/positions/${positionId}`)
+    const deleteResponse = await request(app.server).delete(
+      `/positions/${positionId}`,
+    )
 
     expect(deleteResponse.statusCode).toBe(204)
 
-    const findResponse = await request(app.server).get(`/positions/${positionId}`)
+    const findResponse = await request(app.server).get(
+      `/positions/${positionId}`,
+    )
 
     expect(findResponse.statusCode).toBe(404)
   })

@@ -19,7 +19,9 @@ describe('Find Employee (e2e)', () => {
 
     const employeeId = createResponse.body.employee.id
 
-    const findResponse = await request(app.server).get(`/employees/${employeeId}`)
+    const findResponse = await request(app.server).get(
+      `/employees/${employeeId}`,
+    )
 
     expect(findResponse.statusCode).toBe(200)
     expect(findResponse.body.employee).toEqual(

@@ -35,7 +35,7 @@ describe('Register Admin Use Case', () => {
         name: 'Admin Two',
         email: 'duplicate@example.com',
         password: 'abcdef',
-      })
+      }),
     ).rejects.toBeInstanceOf(Error)
   })
 })

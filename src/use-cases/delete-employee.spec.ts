@@ -25,8 +25,6 @@ describe('Delete Employee Use Case', () => {
   })
 
   it('should throw error if employee not found', async () => {
-    await expect(() =>
-      sut.execute({ id: 'non-existing-id' }),
-    ).rejects.toThrow()
+    await expect(() => sut.execute({ id: 'non-existing-id' })).rejects.toThrow()
   })
 })

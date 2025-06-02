@@ -24,8 +24,6 @@ describe('Delete Position Use Case', () => {
   })
 
   it('should throw error if position not found', async () => {
-    await expect(() =>
-      sut.execute({ id: 'non-existing-id' }),
-    ).rejects.toThrow()
+    await expect(() => sut.execute({ id: 'non-existing-id' })).rejects.toThrow()
   })
 })

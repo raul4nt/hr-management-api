@@ -13,12 +13,11 @@ interface UpdateEmployeeUseCaseResponse {
 export class UpdateEmployeeUseCase {
   constructor(private employeesRepository: EmployeesRepository) {}
 
-async execute({
-  id,
-  data,
-}: UpdateEmployeeUseCaseRequest): Promise<UpdateEmployeeUseCaseResponse> {
-  const employee = await this.employeesRepository.update(id, data)
-  return { employee }
-}
-
+  async execute({
+    id,
+    data,
+  }: UpdateEmployeeUseCaseRequest): Promise<UpdateEmployeeUseCaseResponse> {
+    const employee = await this.employeesRepository.update(id, data)
+    return { employee }
+  }
 }

@@ -14,7 +14,7 @@ describe('Find Benefit By Id Use Case', () => {
   it('should return the benefit with given id', async () => {
     const benefit = await benefitsRepository.create({
       name: 'Health Insurance',
-      value: 700
+      value: 700,
     })
 
     const { benefit: foundBenefit } = await sut.execute({ id: benefit.id })
@@ -26,7 +26,9 @@ describe('Find Benefit By Id Use Case', () => {
   })
 
   it('should return null if benefit not found', async () => {
-    const { benefit: foundBenefit } = await sut.execute({ id: 'non-existing-id' })
+    const { benefit: foundBenefit } = await sut.execute({
+      id: 'non-existing-id',
+    })
 
     expect(foundBenefit).toBeNull()
   })
