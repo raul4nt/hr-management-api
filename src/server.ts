@@ -1,11 +1,16 @@
-import { app } from './app'
+// server.ts
+import { buildApp } from './app'
 import { env } from './env'
 
-app
-  .listen({
+async function bootstrap() {
+  const app = await buildApp()
+
+  await app.listen({
     host: '0.0.0.0',
     port: env.PORT,
   })
-  .then(() => {
-    console.log('🚀 HTTP Server Running!')
-  })
+
+  console.log('🚀 HTTP Server Running!')
+}
+
+bootstrap()
