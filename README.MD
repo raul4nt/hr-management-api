@@ -1,4 +1,4 @@
-# 🧑‍💼 HR Management API
+# 🧑‍💼 RHMaster
 
 A RESTful API for managing employee data, including positions, salaries and benefits. Built with **Node.js** and **PostgreSQL**, this system helps organizations handle human resource operations efficiently and securely.
 
