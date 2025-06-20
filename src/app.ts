@@ -13,48 +13,44 @@ import { positionsRoutes } from './http/controllers/positions/routes'
 import { benefitsRoutes } from './http/controllers/benefits/routes'
 import { uploadRoutes } from './upload'
 
-export async function buildApp() {
-  const app = fastify()
+export const app = fastify()
 
-  await app.register(cors, {
-    origin: '*', // Permite qualquer origem (ideal para desenvolvimento)
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // <-- ADICIONE OU EDITE ESTA LINHA
-    allowedHeaders: ['Content-Type', 'Authorization'], // <-- Opcional, mas boa prática para APIs com JWT ou JSON
-  })
+app.register(cors, {
+  origin: '*', // Permite qualquer origem (ideal para desenvolvimento)
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+})
 
-  app.register(fastifyJwt, {
-    secret: env.JWT_SECRET,
-    cookie: {
-      cookieName: 'refreshToken',
-      signed: false,
-    },
-    sign: {
-      expiresIn: '10m',
-    },
-  })
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m',
+  },
+})
 
-  app.register(fastifyCookie)
-  app.register(multer.contentParser)
+app.register(fastifyCookie)
+app.register(multer.contentParser)
 
-  app.register(employeesRoutes)
-  app.register(adminsRoutes)
-  app.register(positionsRoutes)
-  app.register(benefitsRoutes)
-  app.register(uploadRoutes)
+app.register(employeesRoutes)
+app.register(adminsRoutes)
+app.register(positionsRoutes)
+app.register(benefitsRoutes)
+app.register(uploadRoutes)
 
-  app.setErrorHandler((error, _, reply) => {
-    if (error instanceof ZodError) {
-      return reply
-        .status(400)
-        .send({ message: 'Validation error.', issues: error.format() })
-    }
+app.setErrorHandler((error, _, reply) => {
+  if (error instanceof ZodError) {
+    return reply
+      .status(400)
+      .send({ message: 'Validation error.', issues: error.format() })
+  }
 
-    if (env.NODE_ENV !== 'production') {
-      console.error(error)
-    }
+  if (env.NODE_ENV !== 'production') {
+    console.error(error)
+  }
 
-    return reply.status(500).send({ message: 'Internal server error.' })
-  })
-
-  return app
-}
+  return reply.status(500).send({ message: 'Internal server error.' })
+})

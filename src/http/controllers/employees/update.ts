@@ -20,7 +20,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
     })
 
   const { id } = paramsSchema.parse(request.params)
-  console.log(request.body)
+
   const { name, email, positionId, benefitIds } = bodySchema.parse(request.body)
 
   const useCase = makeUpdateEmployeeUseCase()
